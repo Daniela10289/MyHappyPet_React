@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import '@styles/Header.scss';
 
 export default function Header () {
     return (
