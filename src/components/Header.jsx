@@ -12,19 +12,16 @@ export default function Header () {
                         <a href="/">All</a>
                     </li>
                     <li>
-                        <a href="/">Clothes</a>
+                        <a href="/">Servicios</a>
                     </li>
                     <li>
-                        <a href="/">Electronics</a>
+                        <a href="/">Acerca de</a>
                     </li>
                     <li>
-                        <a href="/">Furnitures</a>
+                        <a href="/">Blog</a>
                     </li>
                     <li>
-                        <a href="/">Toys</a>
-                    </li>
-                    <li>
-                        <a href="/">Others</a>
+                        <a href="/">Contactanos</a>
                     </li>
                 </ul>
             </div>
