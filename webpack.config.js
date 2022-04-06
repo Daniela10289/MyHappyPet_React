@@ -7,12 +7,15 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
+		publicPath: '/',
 	},
 	mode: 'development',
 	resolve: {
 		extensions: ['.js', '.jsx'],
 		alias: {
 			'@styles': path.resolve(__dirname, 'src/styles/'),
+			'@assets': path.resolve(__dirname, 'src/assets/'),
+			'@logos': path.resolve(__dirname, 'src/assets/logos/'),
 		}
 	},
 	module: {
@@ -24,6 +27,14 @@ module.exports = {
 					loader: 'babel-loader'
 				}
 			},
+			{
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader'
+                    }
+                ]
+            },
 			{
                 test: /\.(css|scss)$/,
                 use: [
@@ -47,4 +58,7 @@ module.exports = {
 			filename: '[name].css'
 		}),
 	],
+	devServer: {
+        historyApiFallback: true,
+    }
 }

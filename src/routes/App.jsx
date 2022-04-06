@@ -1,16 +1,20 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from "../containers/Layout";
 import Home from "../pages/Home";
+import '@styles/global.scss';
+import User from "../pages/User";
 
 export default function App() {
     return (
-        <BrowserRouter>
+        <Router>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<Home/>} />
+                    <Route exact path="/" element={<Home/>} />
+                    <Route exact path="user" element={<User/>}/>
+                    {/* <Route path="*" element={<NotFound/>}/> */}
                 </Routes>  
             </Layout>
-        </BrowserRouter>
+        </Router>
     );
 }

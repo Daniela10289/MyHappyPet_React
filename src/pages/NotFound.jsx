@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotFound = () => {
+export default NotFound = () => {
 	return (
 		<div>
 			No encontrado, error 404.
@@ -8,4 +8,3 @@ const NotFound = () => {
 	);
 }
 
-export default NotFound;

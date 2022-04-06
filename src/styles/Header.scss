@@ -1,35 +1,10 @@
 @import "vars";
+@import '@styles/global.scss';
 
-nav {
-  display: flex;
-  justify-content: center;
-  padding: 0 24px;
-  border-bottom: 1px solid var(--very-light-pink); /*Se aplica el borde solo en la parte de abajo del nav*/
-}
+// .navbar-theme-primary:not(.navbar-transparent) {
+//   background-color: var(--black);
+// }
 
-.navbar-left {
-  display: flex;
-}
-
-.navbar-left ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  height: 60px;
-  margin-left: 12px;
-}
-
-.navbar-left ul li a {
-  text-decoration: none;
-  color: var(--very-light-pink);
-  border: 1px solid var(--white);
-  padding: 8px;
-  border-radius: 8px;
-}
-
-.navbar-left ul li a:hover {
-  border: 1px solid var(--hospital-green);
-  color: var(--hospital-green);
+.navbar-main img{
+  max-width: 20%;
 }
