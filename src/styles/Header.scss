@@ -1,9 +1,9 @@
 @import "vars";
 @import '@styles/global.scss';
 
-// .navbar-theme-primary:not(.navbar-transparent) {
-//   background-color: var(--black);
-// }
+.navbar-theme-primary:not(.navbar-transparent) {
+  background-color: var(--white);
+}
 
 .navbar-main img{
   max-width: 20%;
