@@ -4,25 +4,35 @@ import logo from "@logos/logo_happy_pet.png";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
-
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const userClick = () => {
     navigate("/user");
-  }
+  };
+
+  const petClick = () => {
+    navigate("/pet");
+  };
 
   const clickHome = () => {
     navigate("/");
-  }
+  };
 
   return (
     <header className="header-global">
       <nav
         id="navbar-main"
         aria-label="Primary navigation"
-        className="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom @@classes">
+        className="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom @@classes"
+      >
         <div className="container position-relative">
-          <img id="nav-logo" src={logo} alt="Logo" style={{ height: "58px" }} onClick={clickHome} />
+          <img
+            id="nav-logo"
+            src={logo}
+            alt="Logo"
+            style={{ height: "58px" }}
+            onClick={clickHome}
+          />
           <div className="navbar-collapse collapse" id="navbar_global">
             <div className="navbar-collapse-header">
               <div className="row">
@@ -90,34 +100,30 @@ export default function Header() {
                 <div className="dropdown-menu dropdown-menu-lg">
                   <div className="col-auto px-0" data-dropdown-content>
                     <div className="list-group list-group-flush">
-                      <a
-                        onClick={handleClick}
+                      <a onClick={userClick}
                         className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4"
-                      >
+                        data-toggle="modal"
+                        data-target="#modal-form-create-user">
                         <span className="icon icon-sm icon-secondary">
                           <span className="fas fa-file-alt"></span>
                         </span>
                         <div className="ml-4">
-                          <span className="text-dark d-block">
-                            Usuarios
-                          </span>
+                          <span className="text-dark d-block">Usuarios</span>
                           <span className="small">Crea tu usuario</span>
                         </div>
                       </a>
-                      <a href="https://github.com/themesberg/neumorphism-ui/issues"
-                        target="_blank"
+                      <a onClick={petClick}
                         className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
                         <span className="icon icon-sm icon-secondary">
                           <span className="fas fa-microphone-alt"></span>
                         </span>
                         <div className="ml-4">
                           <span className="text-dark d-block">Mascotas</span>
-                          <span className="small">
-                            Registra tu mascota
-                          </span>
+                          <span className="small">Registra tu mascota</span>
                         </div>
                       </a>
-                      <a href="https://github.com/themesberg/neumorphism-ui/issues"
+                      <a
+                        href="https://github.com/themesberg/neumorphism-ui/issues"
                         target="_blank"
                         className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
                         <span className="icon icon-sm icon-secondary">
@@ -125,9 +131,7 @@ export default function Header() {
                         </span>
                         <div className="ml-4">
                           <span className="text-dark d-block">Citas</span>
-                          <span className="small">
-                            Pide tu cita
-                          </span>
+                          <span className="small">Pide tu cita</span>
                         </div>
                       </a>
                     </div>
