@@ -1,4 +1,4 @@
- import React, { useState } from 'react';
+import React, { useState } from 'react';
 import "@styles/User.scss";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';

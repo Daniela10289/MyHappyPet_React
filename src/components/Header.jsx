@@ -7,7 +7,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   const userClick = () => {
-    navigate("/user");
+    navigate("/listuser");
   };
 
   const petClick = () => {
