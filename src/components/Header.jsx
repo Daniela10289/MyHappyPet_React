@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
   const navigate = useNavigate();
 
-  const userClick = () => {
+  const ListClick = () => {
     navigate("/listuser");
   };
 
@@ -100,10 +100,8 @@ export default function Header() {
                 <div className="dropdown-menu dropdown-menu-lg">
                   <div className="col-auto px-0" data-dropdown-content>
                     <div className="list-group list-group-flush">
-                      <a onClick={userClick}
-                        className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4"
-                        data-toggle="modal"
-                        data-target="#modal-form-create-user">
+                      <a onClick={ListClick}
+                        className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
                         <span className="icon icon-sm icon-secondary">
                           <span className="fas fa-file-alt"></span>
                         </span>
