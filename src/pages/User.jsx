@@ -2,6 +2,7 @@ import React from "react";
 import "@styles/User.scss";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export default function User() {
 
@@ -17,6 +18,15 @@ export default function User() {
                 console.log("error!!! " + error);
             });
     } 
+
+    const mostrarAlerta = () => {
+        swal({
+            title: "Bien Hecho!",
+            text: "El usuario se creo correctamente",
+            icon: "success",
+            isDismissed: true 
+        });
+    }
 
     return (
 
@@ -34,7 +44,7 @@ export default function User() {
                                         <label htmlFor="exampleInputIcon999">Número de identificación</label>
                                         <div className="input-group mb-4">
                                             <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-envelope"></span></span></div>
-                                            <input className="form-control" id="exampleInputIcon999" placeholder="11111111" type="text" aria-label="text" {...register('document', { required: true })} />
+                                            <input className="form-control" id="exampleInputIcon999" placeholder="" type="text" aria-label="text" {...register('document', { required: true })} />
                                             {errors.document && <p>Debe ingresar un documento valido.</p>}
                                         </div>
                                     </div>
@@ -43,7 +53,7 @@ export default function User() {
                                             <label htmlFor="name">Nombre</label>
                                             <div className="input-group mb-4">
                                                 <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
-                                                <input className="form-control" id="name" placeholder="Pedro" type="text" aria-label="text" {...register('name_user', { required: true })} />
+                                                <input className="form-control" id="name" placeholder="" type="text" aria-label="text" {...register('name_user', { required: true })} />
                                                 {errors.name_user && <p>Debe ingresar un nombre valido.</p>}
                                             </div>
                                         </div>
@@ -51,7 +61,7 @@ export default function User() {
                                             <label htmlFor="last_name">Apellido</label>
                                             <div className="input-group mb-4">
                                                 <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
-                                                <input className="form-control" id="last_name" placeholder="Fuentes" type="text" aria-label="text" {...register('last_name', { required: true })} />
+                                                <input className="form-control" id="last_name" placeholder="" type="text" aria-label="text" {...register('last_name', { required: true })} />
                                                 {errors.last_name && <p>Debe ingresar un apellido valido.</p>}
                                             </div>
                                         </div>
@@ -59,15 +69,15 @@ export default function User() {
                                             <label htmlFor="phone">Celular</label>
                                             <div className="input-group mb-5">
                                                 <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
-                                                <input className="form-control" id="phone" placeholder="315577655" type="number" aria-label="text" {...register('phone', { required: true })} />
+                                                <input className="form-control" id="phone" placeholder="" type="number" aria-label="text" {...register('phone', { required: true })} />
                                                 {errors.phone && <p>Debe ingresar un número valido.</p>}
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" className="btn btn-block btn-primary">Crear</button>
+                                    <button type="submit" className="btn btn-block btn-primary" onClick={mostrarAlerta}>Crear</button>
                                 </form>
                             </div>
-                        </div>
+                        </div>            
                     </div>
                 </div>
             </div>
