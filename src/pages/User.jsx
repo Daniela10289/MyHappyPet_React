@@ -11,13 +11,18 @@ export default function User() {
         console.log(data);
         axios.post(`http://localhost:8080/api/users/`, data)
             .then(res => {
-                console.log(res);
                 console.log(res.data);
+                cancelCourse();
             })
             .catch ((error) => {
                 console.log("error!!! " + error);
             });
     } 
+
+    const cancelCourse = () => { 
+        document.getElementById("form").reset(); 
+    }
+
 
     const mostrarAlerta = () => {
         swal({
@@ -74,7 +79,7 @@ export default function User() {
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" className="btn btn-block btn-primary" onClick={mostrarAlerta}>Crear</button>
+                                    <button type="submit" className="btn btn-block btn-primary">Crear</button>
                                 </form>
                             </div>
                         </div>            

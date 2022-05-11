@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import "@styles/ListUser.scss";
-import icon_edit from "@icons/edit.png";
-import icon_delete from "@icons/delete.png";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 export default function ListUser() {
 
@@ -49,6 +49,8 @@ export default function ListUser() {
       });
   };
 
+  
+
     return (
       <div className="container">
         <div className="row">
@@ -73,23 +75,29 @@ export default function ListUser() {
                   <th className="border-0" scope="col" id="females3">
                     Opciones
                   </th>
+                  <th>
+                  <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Crear nuevo usuario">
+                      <FontAwesomeIcon icon={solid('circle-plus')} className="icon-plus"/>
+                    </button>
+                  </th>
                 </tr>
                 
                 {users.map((user) => {
                   return (  
-                  <tr>
-                    <th scope="row" id="Bolter3" headers="firstyear3 teacher3" key={user.id}>{user.document}</th>
+                  <tr  key={user.id}>
+                    <th scope="row" id="Bolter3" headers="firstyear3 teacher3">{user.document}</th>
                     <td headers="firstyear3 Bolter3 males3">{user.name_user}</td>
                     <td headers="firstyear3 Bolter3 females3">{user.last_name}</td>
                     <td headers="firstyear3 Bolter3 females3">{user.phone}</td>
-                    <td headers="firstyear3 Bolter3 females3">
+                    <td headers="firstyear3 Bolter3 females3" className="col-2 col-sm-1 col-md-2">
                     <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Editar">
-                      <img src={icon_edit} alt="Editar" />
+                      <FontAwesomeIcon icon={solid('pencil')} className="icon-pencil"/>
                     </button>
                     <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Eliminar" onClick={ () => deleteUsers(user.id)}>
-                    <img src={icon_delete} alt="Eliminar" />
+                      <FontAwesomeIcon icon={solid('trash')} className="icon-trash"/>
                     </button>
                     </td>
+                    <td className="col-1 col-sm-1 col-md-1"></td>
                   </tr>
                   ) 
                 })}
