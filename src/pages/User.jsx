@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import "@styles/User.scss";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -6,23 +7,57 @@ import swal from 'sweetalert';
 
 export default function User() {
 
-    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
+
+    const user_id = searchParams.get("id");
+    const edit = (searchParams.get("edit") === "true");
+
+    const { register, handleSubmit, formState: { errors }, setValue, reset} = useForm();
     const onSubmit = (data) => {
-        console.log(data);
-        axios.post(`http://localhost:8080/api/users/`, data)
+        
+        let promise = null;
+        if (user_id && edit) {
+            promise = axios.put(`http://localhost:8080/api/users/${user_id}`, data);
+        }else {
+            promise = axios.post(`http://localhost:8080/api/users/`, data);
+        }
+        return promise
             .then(res => {
                 console.log(res.data);
-                cancelCourse();
+                reset();
+                if (user_id && edit) {
+                    navigate("/listuser");
+                }
             })
             .catch ((error) => {
                 console.log("error!!! " + error);
             });
     } 
 
-    const cancelCourse = () => { 
-        document.getElementById("form").reset(); 
-    }
+    const getUsers = (id) => {
+        return axios
+          .get(`http://localhost:8080/api/users/${id}`)
+          .then((res) => {
+            console.log(res.data);
+            return res.data;
+          })
+          .catch((error) => {
+            console.log("error!!! " + error);
+            return []
+          });
+    };
 
+    if (edit) {
+        useEffect(() => {
+          getUsers(user_id).then((userResponse) => {
+            setValue("document", userResponse.document);
+            setValue("name_user", userResponse.name_user);
+            setValue("last_name", userResponse.last_name);
+            setValue("phone", userResponse.phone);
+          })
+        }, []);
+    }
 
     const mostrarAlerta = () => {
         swal({
@@ -41,24 +76,28 @@ export default function User() {
                     <div className="col-12 col-md-6 offset-md-3" id="form-user">
                         <div className="card bg-primary shadow-soft border-light p-4">
                             <div className="card-header text-center pb-0">
-                                <h2 className="mb-0 h5">Crear Usuario</h2>
+                                {
+                                    edit
+                                        ? <h2 className="mb-0 h5">Editar Usuario</h2>
+                                        : <h2 className="mb-0 h5">Crear Usuario</h2>
+                                }
                             </div>
                             <div className="card-body">
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputIcon999">Número de identificación</label>
+                                        <label htmlFor="document">Número de identificación</label>
                                         <div className="input-group mb-4">
                                             <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-envelope"></span></span></div>
-                                            <input className="form-control" id="exampleInputIcon999" placeholder="" type="text" aria-label="text" {...register('document', { required: true })} />
+                                            <input className="form-control" id="document" placeholder="" type="text" aria-label="text"{...register('document', { required: true })} />
                                             {errors.document && <p>Debe ingresar un documento valido.</p>}
                                         </div>
                                     </div>
                                     <div className="form-group">
                                         <div className="form-group">
-                                            <label htmlFor="name">Nombre</label>
+                                            <label htmlFor="name_user">Nombre</label>
                                             <div className="input-group mb-4">
                                                 <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
-                                                <input className="form-control" id="name" placeholder="" type="text" aria-label="text" {...register('name_user', { required: true })} />
+                                                <input className="form-control" id="name_user" placeholder="" type="text" aria-label="text" {...register('name_user', { required: true })} />
                                                 {errors.name_user && <p>Debe ingresar un nombre valido.</p>}
                                             </div>
                                         </div>
@@ -79,7 +118,11 @@ export default function User() {
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" className="btn btn-block btn-primary">Crear</button>
+                                    {
+                                        edit 
+                                            ? <button type="submit" className="btn btn-block btn-primary">Editar</button>
+                                            : <button type="submit" className="btn btn-block btn-primary">Crear</button>
+                                    }
                                 </form>
                             </div>
                         </div>            

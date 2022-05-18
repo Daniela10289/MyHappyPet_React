@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import "@styles/ListUser.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro'
+
 
 export default function ListUser() {
 
@@ -31,10 +32,6 @@ export default function ListUser() {
       setUsers(userResponse);
     })
   }, []);
-
-  const editUsers = () => {
-    
-  }
 
   const deleteUsers = (id) => {
     const url = `http://localhost:8080/api/users/${id}`;
@@ -76,7 +73,7 @@ export default function ListUser() {
                     Opciones
                   </th>
                   <th>
-                  <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Crear nuevo usuario">
+                  <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Crear nuevo usuario" onClick={userClick}>
                       <FontAwesomeIcon icon={solid('circle-plus')} className="icon-plus"/>
                     </button>
                   </th>
@@ -90,9 +87,17 @@ export default function ListUser() {
                     <td headers="firstyear3 Bolter3 females3">{user.last_name}</td>
                     <td headers="firstyear3 Bolter3 females3">{user.phone}</td>
                     <td headers="firstyear3 Bolter3 females3" className="col-2 col-sm-1 col-md-2">
-                    <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Editar">
-                      <FontAwesomeIcon icon={solid('pencil')} className="icon-pencil"/>
-                    </button>
+
+                    <Link to={{
+                        pathname: "/user",
+                        search: `?id=${user.id}&edit=true`,
+                        state: { setEdition: true, id: 1 }
+                             }}> 
+                      <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Editar"> 
+                        <FontAwesomeIcon icon={solid('pencil')} className="icon-pencil"/>
+                      </button>
+                    </Link>
+
                     <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Eliminar" onClick={ () => deleteUsers(user.id)}>
                       <FontAwesomeIcon icon={solid('trash')} className="icon-trash"/>
                     </button>
@@ -103,7 +108,6 @@ export default function ListUser() {
                 })}
               </tbody>
             </table>
-            <button className="btn btn-primary text-success" type="button" onClick={userClick}>Crear</button>
           </div>
         </div>
       </div>
