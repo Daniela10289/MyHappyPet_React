@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams,  } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid, regular} from '@fortawesome/fontawesome-svg-core/import.macro'
 import "@styles/User.scss";
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 import swal from 'sweetalert';
+import {getUsersId, sendUsers} from "@services/user"
 
 export default function User() {
 
@@ -14,43 +17,20 @@ export default function User() {
     const edit = (searchParams.get("edit") === "true");
 
     const { register, handleSubmit, formState: { errors }, setValue, reset} = useForm();
-    const onSubmit = (data) => {
-        
-        let promise = null;
-        if (user_id && edit) {
-            promise = axios.put(`http://localhost:8080/api/users/${user_id}`, data);
-        }else {
-            promise = axios.post(`http://localhost:8080/api/users/`, data);
-        }
-        return promise
-            .then(res => {
-                console.log(res.data);
-                reset();
-                if (user_id && edit) {
-                    navigate("/listuser");
-                }
-            })
-            .catch ((error) => {
-                console.log("error!!! " + error);
-            });
-    } 
 
-    const getUsers = (id) => {
-        return axios
-          .get(`http://localhost:8080/api/users/${id}`)
-          .then((res) => {
-            console.log(res.data);
-            return res.data;
-          })
-          .catch((error) => {
-            console.log("error!!! " + error);
-            return []
-          });
-    };
+    const onSubmit = (data) => {
+        if (user_id && edit) {
+            sendUsers(data, user_id, true);
+            navigate("/listuser");
+        }else {
+            sendUsers(data, user_id, false);
+        }
+        reset();
+    } 
 
     if (edit) {
         useEffect(() => {
-          getUsers(user_id).then((userResponse) => {
+          getUsersId(user_id).then((userResponse) => {
             setValue("document", userResponse.document);
             setValue("name_user", userResponse.name_user);
             setValue("last_name", userResponse.last_name);
@@ -87,7 +67,7 @@ export default function User() {
                                     <div className="form-group">
                                         <label htmlFor="document">Número de identificación</label>
                                         <div className="input-group mb-4">
-                                            <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-envelope"></span></span></div>
+                                            <div className="input-group-prepend"><span className="input-group-text"><FontAwesomeIcon icon={solid('image-portrait')} className="icon-form"/></span></div>
                                             <input className="form-control" id="document" placeholder="" type="text" aria-label="text"{...register('document', { required: true })} />
                                             {errors.document && <p>Debe ingresar un documento valido.</p>}
                                         </div>
@@ -96,7 +76,7 @@ export default function User() {
                                         <div className="form-group">
                                             <label htmlFor="name_user">Nombre</label>
                                             <div className="input-group mb-4">
-                                                <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
+                                                <div className="input-group-prepend"><span className="input-group-text"><FontAwesomeIcon icon={solid('file-signature')} className="icon-form"/></span></div>
                                                 <input className="form-control" id="name_user" placeholder="" type="text" aria-label="text" {...register('name_user', { required: true })} />
                                                 {errors.name_user && <p>Debe ingresar un nombre valido.</p>}
                                             </div>
@@ -104,7 +84,7 @@ export default function User() {
                                         <div className="form-group">
                                             <label htmlFor="last_name">Apellido</label>
                                             <div className="input-group mb-4">
-                                                <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
+                                                <div className="input-group-prepend"><span className="input-group-text"><FontAwesomeIcon icon={solid('file-pen')} className="icon-form"/></span></div>
                                                 <input className="form-control" id="last_name" placeholder="" type="text" aria-label="text" {...register('last_name', { required: true })} />
                                                 {errors.last_name && <p>Debe ingresar un apellido valido.</p>}
                                             </div>
@@ -112,7 +92,7 @@ export default function User() {
                                         <div className="form-group">
                                             <label htmlFor="phone">Celular</label>
                                             <div className="input-group mb-5">
-                                                <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
+                                                <div className="input-group-prepend"><span className="input-group-text"><FontAwesomeIcon icon={solid('phone')} className="icon-form"/></span></div>
                                                 <input className="form-control" id="phone" placeholder="" type="number" aria-label="text" {...register('phone', { required: true })} />
                                                 {errors.phone && <p>Debe ingresar un número valido.</p>}
                                             </div>
@@ -120,8 +100,8 @@ export default function User() {
                                     </div>
                                     {
                                         edit 
-                                            ? <button type="submit" className="btn btn-block btn-primary">Editar</button>
-                                            : <button type="submit" className="btn btn-block btn-primary">Crear</button>
+                                            ? <button type="submit" className="btn btn-block btn-primary">Editar <FontAwesomeIcon icon={solid('paper-plane')} className="icon-form"/> </button>
+                                            : <button type="submit" className="btn btn-block btn-primary">Crear <FontAwesomeIcon icon={solid('paper-plane')} className="icon-form"/> </button>
                                     }
                                 </form>
                             </div>

@@ -3,27 +3,14 @@ import axios from "axios";
 import "@styles/ListUser.scss";
 import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro'
-
+import { solid, regular} from '@fortawesome/fontawesome-svg-core/import.macro'
+import {getUsers, deleteUsers} from "@services/user"
 
 export default function ListUser() {
 
   const navigate = useNavigate();
   const userClick = () => {
     navigate("/user");
-  };
-
-  const getUsers = () => {
-    return axios
-      .get(`http://localhost:8080/api/users/`)
-      .then((res) => {
-        console.log(res);
-        return res.data
-      })
-      .catch((error) => {
-        console.log("error!!! " + error);
-        return []
-      });
   };
 
   const [users, setUsers] = useState([]);
@@ -33,20 +20,17 @@ export default function ListUser() {
     })
   }, []);
 
-  const deleteUsers = (id) => {
-    const url = `http://localhost:8080/api/users/${id}`;
-    console.log(id);
-    axios
-      .delete(url)
+  const handleDeleteUsers = (id) => {
+    deleteUsers(id)
       .then(res => {
-        setUsers(users.filter(user => user.id != id));
+        if (res === true) {
+          setUsers(users.filter(user => user.id != id));
+        }
       })
       .catch(err => {
         console.log(err);
       });
   };
-
-  
 
     return (
       <div className="container">
@@ -98,7 +82,7 @@ export default function ListUser() {
                       </button>
                     </Link>
 
-                    <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Eliminar" onClick={ () => deleteUsers(user.id)}>
+                    <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Eliminar" onClick={ () => handleDeleteUsers(user.id)}>
                       <FontAwesomeIcon icon={solid('trash')} className="icon-trash"/>
                     </button>
                     </td>
