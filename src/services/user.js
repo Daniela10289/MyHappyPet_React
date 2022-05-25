@@ -1,5 +1,6 @@
 import axios from "axios";
-import config from "../config"
+import config from "../config";
+import {alertNoty, DialogWindow} from "@utils/alerts";
 
 export const getUsers = () => {
     return axios
@@ -37,6 +38,11 @@ export const getUsers = () => {
     return promise
         .then(res => {
             console.log(res.data);
+            if (id & valor) {
+              alertNoty('success', 'Se modifico correctamente!');
+            } else {
+              alertNoty('success', 'Se creo correctamente!');
+            }
         })
         .catch ((error) => {
             console.log("error!!! " + error);
@@ -46,15 +52,21 @@ export const getUsers = () => {
   export const deleteUsers = (id) => {
     const url = `${config.baseHost}/api/users/${id}`;
     console.log(id);
-    return axios
-      .delete(url)
-      .then(res => {
-        return true
-      })
-      .catch(err => {
-        console.log(err);
-        throw err
-      });
+    return DialogWindow('Esta seguro?', 'Se eliminara el registro', 'warning', true).then((result) => {
+      debugger
+      if (result.isConfirmed) {
+        return axios
+        .delete(url)
+          .then(res => {
+            alertNoty('success', 'Se elimino correctamente!')
+            return true
+          })
+          .catch(err => {
+            alertNoty('error', 'No es posible eliminar!')
+            throw err
+          });
+      }
+    })
   };
 
   

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useSearchParams,  } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { solid, regular} from '@fortawesome/fontawesome-svg-core/import.macro'
 import "@styles/User.scss";
+import React, { useEffect } from "react";
+import { useSearchParams,  } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { solid} from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from "react-router-dom"
-import swal from 'sweetalert';
-import {getUsersId, sendUsers} from "@services/user"
+import { useNavigate } from "react-router-dom";
+import {getUsersId, sendUsers} from "@services/user";
+import {alertNoty} from "@utils/alerts";
 
 export default function User() {
 
@@ -39,15 +39,7 @@ export default function User() {
         }, []);
     }
 
-    const mostrarAlerta = () => {
-        swal({
-            title: "Bien Hecho!",
-            text: "El usuario se creo correctamente",
-            icon: "success",
-            isDismissed: true 
-        });
-    }
-
+   
     return (
 
         <div className="section-header" id="section-header">
@@ -98,6 +90,7 @@ export default function User() {
                                             </div>
                                         </div>
                                     </div>
+                                    <button type="submit" className="btn btn-block btn-primary" onClick={ () => alertNoty('warning', 'El usuario se modifico correctamente!')}>alerta</button>
                                     {
                                         edit 
                                             ? <button type="submit" className="btn btn-block btn-primary">Editar <FontAwesomeIcon icon={solid('paper-plane')} className="icon-form"/> </button>
