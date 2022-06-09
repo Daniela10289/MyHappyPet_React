@@ -38,7 +38,7 @@ export const getUsers = () => {
     return promise
         .then(res => {
             console.log(res.data);
-            if (id & valor) {
+            if (valor === true) {
               alertNoty('success', 'Se modifico correctamente!');
             } else {
               alertNoty('success', 'Se creo correctamente!');
@@ -46,6 +46,7 @@ export const getUsers = () => {
         })
         .catch ((error) => {
             console.log("error!!! " + error);
+            alertNoty('error', 'Ups!! Hubo un error!');
         });
   }
 

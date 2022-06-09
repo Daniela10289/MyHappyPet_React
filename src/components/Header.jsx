@@ -6,13 +6,17 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
   const navigate = useNavigate();
 
-  const ListClick = () => {
+  const ListUserClick = () => {
     navigate("/listuser");
   };
 
-  const petClick = () => {
-    navigate("/pet");
+  const ListPetClick = () => {
+    navigate("/listpet");
   };
+
+  // const petClick = () => {
+  //   navigate("/pet");
+  // };
 
   const clickHome = () => {
     navigate("/");
@@ -100,7 +104,7 @@ export default function Header() {
                 <div className="dropdown-menu dropdown-menu-lg">
                   <div className="col-auto px-0" data-dropdown-content>
                     <div className="list-group list-group-flush">
-                      <a onClick={ListClick}
+                      <a onClick={ListUserClick}
                         className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
                         <span className="icon icon-sm icon-secondary">
                           <span className="fas fa-file-alt"></span>
@@ -110,7 +114,7 @@ export default function Header() {
                           <span className="small">Crea tu usuario</span>
                         </div>
                       </a>
-                      <a onClick={petClick}
+                      <a onClick={ListPetClick}
                         className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
                         <span className="icon icon-sm icon-secondary">
                           <span className="fas fa-microphone-alt"></span>
@@ -138,7 +142,7 @@ export default function Header() {
               </li>
             </ul>
           </div>
-          <div className="d-flex align-items-center">
+          {/* <div className="d-flex align-items-center">
             <a
               href="https://themesberg.com/product/ui-kits/neumorphism-ui-pro"
               target="_blank"
@@ -164,7 +168,7 @@ export default function Header() {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-          </div>
+          </div> */}
         </div>
       </nav>
     </header>

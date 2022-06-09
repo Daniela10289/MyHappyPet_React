@@ -59,7 +59,7 @@ export default function User() {
                                     <div className="form-group">
                                         <label htmlFor="document">Número de identificación</label>
                                         <div className="input-group mb-4">
-                                            <div className="input-group-prepend"><span className="input-group-text"><FontAwesomeIcon icon={solid('image-portrait')} className="icon-form"/></span></div>
+                                            <div className="input-group-prepend"><span className="input-group-text"><FontAwesomeIcon icon={solid('user-large')} className="icon-form"/></span></div>
                                             <input className="form-control" id="document" placeholder="" type="text" aria-label="text"{...register('document', { required: true })} />
                                             {errors.document && <p>Debe ingresar un documento valido.</p>}
                                         </div>
@@ -90,7 +90,7 @@ export default function User() {
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" className="btn btn-block btn-primary" onClick={ () => alertNoty('warning', 'El usuario se modifico correctamente!')}>alerta</button>
+                                    {/* <button type="submit" className="btn btn-block btn-primary" onClick={ () => alertNoty('warning', 'El usuario se modifico correctamente!')}>alerta</button> */}
                                     {
                                         edit 
                                             ? <button type="submit" className="btn btn-block btn-primary">Editar <FontAwesomeIcon icon={solid('paper-plane')} className="icon-form"/> </button>

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import "@styles/User.scss";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { solid} from '@fortawesome/fontawesome-svg-core/import.macro';
 
 export default function Pet() {
     const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -44,7 +46,7 @@ export default function Pet() {
                                     <div className="form-group">
                                         <label htmlFor="">Nombre del usuario</label>
                                         <div className="input-group mb-4">
-                                            <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-envelope"></span></span></div>
+                                            <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-envelope"><FontAwesomeIcon icon={solid('user-large')} className="icon-form"/></span></span></div>
                                             <select className="form-control" name="func">
                                                 <option value=""></option>
                                                 <option value="5">{}</option>
@@ -56,15 +58,15 @@ export default function Pet() {
                                         <div className="form-group">
                                             <label htmlFor="name">Nombre de la mascota</label>
                                             <div className="input-group mb-4">
-                                                <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
-                                                <input className="form-control" id="name" placeholder="lulu" type="text" aria-label="text" {...register('name_user', { required: true })} />
+                                                <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span><FontAwesomeIcon icon={solid('dog')} className="icon-form"/></span></div>
+                                                <input className="form-control" id="name" type="text" aria-label="text" {...register('name_user', { required: true })} />
                                                 {errors.name_user && <p>Debe ingresar un nombre valido.</p>}
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="last_name">Raza</label>
                                             <div className="input-group mb-4">
-                                                <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
+                                                <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span><FontAwesomeIcon icon={solid('paw')} className="icon-form"/></span></div>
                                                 <select className="form-control" name="func">
                                                     <option value=""></option>
                                                     <option value="felino">Felino</option>
@@ -75,7 +77,7 @@ export default function Pet() {
                                         <div className="form-group">
                                             <label htmlFor="phone">Genero</label>
                                             <div className="input-group mb-5">
-                                                <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"></span></span></div>
+                                                <div className="input-group-prepend"><span className="input-group-text"><span className="fas fa-unlock-alt"><FontAwesomeIcon icon={solid('venus-mars')} className="icon-form"/></span></span></div>
                                                 <select className="form-control" name="func">
                                                     <option value=""></option>
                                                     <option value="macho">Macho</option>
