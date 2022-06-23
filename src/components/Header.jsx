@@ -14,9 +14,9 @@ export default function Header() {
     navigate("/listpet");
   };
 
-  // const petClick = () => {
-  //   navigate("/pet");
-  // };
+  const ListAppointmentClick = () => {
+    navigate("/listappointment");
+  };
 
   const clickHome = () => {
     navigate("/");
@@ -124,9 +124,7 @@ export default function Header() {
                           <span className="small">Registra tu mascota</span>
                         </div>
                       </a>
-                      <a
-                        href="https://github.com/themesberg/neumorphism-ui/issues"
-                        target="_blank"
+                      <a onClick={ListAppointmentClick}
                         className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
                         <span className="icon icon-sm icon-secondary">
                           <span className="fas fa-microphone-alt"></span>

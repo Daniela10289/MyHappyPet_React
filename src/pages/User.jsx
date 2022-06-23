@@ -1,10 +1,9 @@
 import "@styles/User.scss";
 import React, { useEffect } from "react";
-import { useSearchParams,  } from "react-router-dom";
+import { useSearchParams, useNavigate} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid} from '@fortawesome/fontawesome-svg-core/import.macro';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from "react-router-dom";
 import {getUsersId, sendUsers} from "@services/user";
 import {alertNoty} from "@utils/alerts";
 
@@ -20,12 +19,15 @@ export default function User() {
 
     const onSubmit = (data) => {
         if (user_id && edit) {
-            sendUsers(data, user_id, true);
-            navigate("/listuser");
+            sendUsers(data, user_id, true).then(()=> {
+                navigate("/listuser");
+                reset();
+            })
         }else {
-            sendUsers(data, user_id, false);
+            sendUsers(data, user_id, false).then(()=> {
+                reset();
+            })
         }
-        reset();
     } 
 
     if (edit) {
@@ -90,7 +92,7 @@ export default function User() {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <button type="submit" className="btn btn-block btn-primary" onClick={ () => alertNoty('warning', 'El usuario se modifico correctamente!')}>alerta</button> */}
+                                    
                                     {
                                         edit 
                                             ? <button type="submit" className="btn btn-block btn-primary">Editar <FontAwesomeIcon icon={solid('paper-plane')} className="icon-form"/> </button>

@@ -1,16 +1,34 @@
 import React, { useState, useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular} from '@fortawesome/fontawesome-svg-core/import.macro'
-import {getPets} from "@services/pet"
+import {getPets, deletePets} from "@services/pet"
+import { useNavigate, Link } from "react-router-dom";
 
 export default function ListPet() {
 
+    const navigate = useNavigate();
+    const petClick = () => {
+      navigate("/pet");
+    };
+    
     const [pets, setPets] = useState([]);
     useEffect(() => {
-        getPets().then((petResponse) => {
-        setPets(petResponse);
-        })
+          getPets().then((petResponse) => {
+            setPets(petResponse);
+          })
     }, []);
+
+    const handleDeletePets = (id) => {
+      deletePets(id)
+        .then(res => {
+          if (res === true) {
+            setPets(pets.filter(pet => pet.id != id));
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
 
     return(
         <div className="container">
@@ -35,7 +53,7 @@ export default function ListPet() {
                     Opciones
                   </th>
                   <th>
-                  <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Crear nuevo usuario">
+                  <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Crear nuevo usuario" onClick={petClick}>
                       <FontAwesomeIcon icon={solid('circle-plus')} className="icon-plus"/>
                     </button>
                   </th>
@@ -44,17 +62,22 @@ export default function ListPet() {
                     pets.map((pet) => {
                         return (
                             <tr key={pet.id}>
-                            <th scope="row" id="Bolter3" headers="firstyear3 teacher3">{pet.user_id}</th>
+                            <th scope="row" id="Bolter3" headers="firstyear3 teacher3">{pet.user.name_user +' '+ pet.user.last_name}</th>
                             <td headers="firstyear3 Bolter3 males3">{pet.name_pet}</td>
                             <td headers="firstyear3 Bolter3 females3">{pet.breed}</td>
                             <td headers="firstyear3 Bolter3 females3">{pet.gender}</td>
                             <td headers="firstyear3 Bolter3 females3" className="col-2 col-sm-1 col-md-2">
-        
-                            <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Editar"> 
-                            <FontAwesomeIcon icon={solid('pencil')} className="icon-pencil"/>
-                            </button>
-        
-                            <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Eliminar">
+                            <Link to={{
+                              pathname: "/pet",
+                              search: `?id=${pet.id}&edit=true`,
+                              state: { setEdition: true, id: 1 }
+                             }}> 
+                              <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Editar"> 
+                                <FontAwesomeIcon icon={solid('pencil')} className="icon-pencil"/>
+                              </button>
+                            </Link>
+
+                            <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Eliminar" onClick={ () => handleDeletePets(pet.id)}>
                               <FontAwesomeIcon icon={solid('trash')} className="icon-trash"/>
                             </button>
                             </td>
