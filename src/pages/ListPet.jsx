@@ -31,7 +31,7 @@ export default function ListPet() {
     };
 
     return(
-        <div className="container">
+      <div className="container">
         <div className="row">
           <div className="col">
             <table className="table table-hover shadow-inset">
@@ -53,7 +53,7 @@ export default function ListPet() {
                     Opciones
                   </th>
                   <th>
-                  <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Crear nuevo usuario" onClick={petClick}>
+                  <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Crear nueva mascota" onClick={petClick}>
                       <FontAwesomeIcon icon={solid('circle-plus')} className="icon-plus"/>
                     </button>
                   </th>
