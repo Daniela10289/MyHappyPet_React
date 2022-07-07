@@ -14,3 +14,27 @@ export const getAppointment = () => {
         throw error
     });
 }
+
+
+export const sendAppointments = (data) => {
+    let promise = null;
+    // if (valor) {
+    //     promise = axios.put(`${config.baseHost}/api/pets/${id}`, data);
+    // }else {
+        promise = axios.post(`${config.baseHost}/api/appointments/`, data);
+    // }
+    return promise
+        .then(res => {
+            console.log(res.data);
+            // if (valor === true) {
+            // alertNoty('success', 'Se modifico correctamente!');
+            // } else {
+            // }
+            alertNoty('success', 'Se creo correctamente!');
+        })
+        .catch ((error) => {
+            console.log("error!!! " + error);
+            alertNoty('error', 'Ups!! Hubo un error!');
+            throw error
+        });
+}

@@ -25,19 +25,25 @@ export default function ListAppointment() {
             <table className="table table-hover shadow-inset">
               <tbody>
                 <tr>
-                  <th className="border-0" scope="col" id="class3">
+                  <th className="border-0" scope="col">
                     Nombre del usuario
                   </th>
-                  <th className="border-0" scope="col" id="teacher3">
+                  <th className="border-0" scope="col">
                     Nombre de la mascota
                   </th>
-                  <th className="border-0" scope="col" id="males3">
+                  <th className="border-0" scope="col">
                     Título
                   </th>
-                  <th className="border-0" scope="col" id="females3">
+                  <th className="border-0" scope="col">
                     Descripción
                   </th>
-                  <th className="border-0" scope="col" id="females3">
+                  <th className="border-0" scope="col">
+                    Hora Inicio
+                  </th>
+                  <th className="border-0" scope="col">
+                    Hora Fin
+                  </th>
+                  <th className="border-0" scope="col">
                     Opciones
                   </th>
                   <th>
@@ -54,6 +60,8 @@ export default function ListAppointment() {
                             <td headers="">{a.pet.name_pet}</td>
                             <td headers="">{a.title}</td>
                             <td headers="">{a.description}</td>
+                            <td headers="">{a.start_datetime}</td>
+                            <td headers="">{a.end_datetime}</td>
                             <td headers="" className="col-2 col-sm-1 col-md-2">
                             {/* <Link to={{
                               pathname: "/pet",

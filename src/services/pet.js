@@ -26,6 +26,18 @@ export const getPetsId = (id) => {
         });
 };
 
+export const getPetsUserId = (userid) => {
+    return axios
+        .get(`${config.baseHost}/api/pets?user_id=${userid}`)
+        .then((res) => {
+        return res.data;
+        })
+        .catch((error) => {
+        console.log("error!!! " + error);
+        throw error
+        });
+};
+
 export const sendPets = (data, id, valor) => {
     let promise = null;
     if (valor) {
