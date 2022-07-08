@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid} from '@fortawesome/fontawesome-svg-core/import.macro';
 import {getUsers} from "@services/user";
 import {getPetsUserId} from "@services/pet";
-import {sendAppointments} from "@services/appointment";
+import {sendAppointments, getAppointmentId} from "@services/appointment";
 import moment from 'moment'
 
 export default function Appointment() {
@@ -41,26 +41,41 @@ export default function Appointment() {
       let end_datetime = data.star_date + " " + data.end_datetime + ":00";
       let startDateTime = moment(start_datetime)
       let endDateTime = moment(end_datetime)
-      
-      // if (pet_id && edit) {
-      //   sendPets(data, pet_id, true).then(()=>{  
-      //     navigate("/listpet");
-      //     reset();
-      //   })
-      // }else {
-        
+
       let cleanedData = {
         pet_id: data.pet_id,
         user_id: data.user_id,
+        description: data.description,
         start_datetime: startDateTime.format(),
         end_datetime: endDateTime.format(),
         title: data.title
       }
-      sendAppointments(cleanedData).then(()=>{
-        reset();
-      })
       
+      if (appt_id && edit) {
+        sendAppointments(data, appt_id, true).then(()=>{  
+          navigate("/listpet");
+          reset();
+        });
+      }else {
+        sendAppointments(cleanedData, appt_id, false).then(()=>{
+          reset();
+        });
+      }
     } 
+
+    if (edit) {
+      useEffect(() => {
+        getAppointmentId(appt_id).then((userResponse) => {
+          setValue("pet_id", userResponse.pet_id);
+          setValue("user_id", userResponse.user_id);
+          setValue("description", userResponse.description);
+          setValue("start_datetime", userResponse.start_datetime);
+          setValue("end_datetime", userResponse.end_datetime);
+          setValue("title", userResponse.title);
+        })
+      }, []);
+  }
+
 
     return (
         <div className="section-header" id="section-header">
@@ -69,13 +84,11 @@ export default function Appointment() {
             <div className="col-12 col-md-6 offset-md-3" id="form-user">
               <div className="card bg-primary shadow-soft border-light p-4">
                 <div className="card-header text-center pb-0">
-                <h2 className="mb-0 h5">Agendar Cita</h2>
-
-                {/* {
+                {
                   edit
-                      ? <h2 className="mb-0 h5">Agendar Cita</h2>
-                      : <h2 className="mb-0 h5">Editar Cita</h2>
-                } */}
+                      ? <h2 className="mb-0 h5">Editar Cita</h2>
+                      : <h2 className="mb-0 h5">Agendar Cita</h2>
+                }
                 </div>
                 <div className="card-body">
                   <form onSubmit={handleSubmit(onSubmit)}>
@@ -153,7 +166,7 @@ export default function Appointment() {
                             </span>
                           </span>
                         </div>
-                        <input className="form-control" id="name" type="text" aria-label="text" />
+                        <input className="form-control" id="name" type="text" aria-label="text" {...register("description", { required: false })}/>
                       </div>
                     </div>
                     <div className="form-group">
@@ -174,12 +187,11 @@ export default function Appointment() {
                       </div>
                     </div>
                   
-                    {/* {
+                    {
                       edit
                       ?<button type="submit" className="btn btn-block btn-primary"> Editar <FontAwesomeIcon icon={solid('paper-plane')}className="icon-form"/></button>
                       :<button type="submit" className="btn btn-block btn-primary"> Crear <FontAwesomeIcon icon={solid('paper-plane')}className="icon-form"/></button>
-                    } */}
-                    <button type="submit" className="btn btn-block btn-primary"> Crear <FontAwesomeIcon icon={solid('paper-plane')}className="icon-form"/></button>
+                    }
                   </form>
                 </div>
               </div>

@@ -63,21 +63,18 @@ export default function ListAppointment() {
                             <td headers="">{a.start_datetime}</td>
                             <td headers="">{a.end_datetime}</td>
                             <td headers="" className="col-2 col-sm-1 col-md-2">
-                            {/* <Link to={{
-                              pathname: "/pet",
-                              search: `?id=${pet.id}&edit=true`,
+                            <Link to={{
+                              pathname: "/appointment",
+                              search: `?id=${a.id}&edit=true`,
                               state: { setEdition: true, id: 1 }
-                             }}>  */}
+                             }}> 
                               <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Editar"> 
                                 <FontAwesomeIcon icon={solid('pencil')} className="icon-pencil"/>
                               </button>
-                            {/* </Link> */}
+                            </Link>
 
                                 <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Eliminar">
                                     <FontAwesomeIcon icon={solid('trash')} className="icon-trash"/>
-                                </button>
-                                <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Detalle">
-                                    <FontAwesomeIcon icon={solid('magnifying-glass')} className="magnifying-glass"/>
                                 </button>
                             </td>
                             <td className="col-1 col-sm-1 col-md-1"></td>

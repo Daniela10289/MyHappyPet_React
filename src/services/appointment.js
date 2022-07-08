@@ -15,14 +15,26 @@ export const getAppointment = () => {
     });
 }
 
+export const getAppointmentId = (id) => {
+    return axios
+        .get(`${config.baseHost}/api/pets/${id}`)
+        .then((res) => {
+        return res.data;
+        })
+        .catch((error) => {
+        console.log("error!!! " + error);
+        throw error
+        });
+};
+
 
 export const sendAppointments = (data) => {
     let promise = null;
-    // if (valor) {
-    //     promise = axios.put(`${config.baseHost}/api/pets/${id}`, data);
-    // }else {
+    if (valor) {
+        promise = axios.put(`${config.baseHost}/api/appointments/${id}`, data);
+    }else {
         promise = axios.post(`${config.baseHost}/api/appointments/`, data);
-    // }
+    }
     return promise
         .then(res => {
             console.log(res.data);
