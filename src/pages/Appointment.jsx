@@ -7,7 +7,7 @@ import { solid} from '@fortawesome/fontawesome-svg-core/import.macro';
 import {getUsers} from "@services/user";
 import {getPetsUserId} from "@services/pet";
 import {sendAppointments, getAppointmentId} from "@services/appointment";
-import moment from 'moment'
+import moment from 'moment';
 
 export default function Appointment() {
 
@@ -23,6 +23,25 @@ export default function Appointment() {
     useEffect(() => {
         getUsers().then((userResponse) => {
             setUserOptions(userResponse);
+            if (edit) {
+                getAppointmentId(appt_id).then((apptResponse) => {
+                  
+                  let startDate = moment( apptResponse.start_datetime);
+                  let startDatetime = moment( apptResponse.start_datetime);
+
+                  debugger
+                  setValue("user_id", apptResponse.user_id);
+                  setValue("description", apptResponse.description);
+                  setValue("start_date", startDate.format('MM-DD-YYYY'));
+                  setValue("start_datetime", startDatetime.format());
+                  setValue("end_datetime", apptResponse.end_datetime);  
+                  setValue("title", apptResponse.title);
+                  getPetsUserId(apptResponse.pet_id).then((petsResponse) => {
+                    setPetOptions(petsResponse)
+                    setValue("pet_id", apptResponse.pet_id);
+                  })
+                })
+          }
         })
       }, []);
 
@@ -32,6 +51,8 @@ export default function Appointment() {
         getPetsUserId(event.target.value).then((petsResponse) => {
           setPetOptions(petsResponse)
         })
+      }else {
+        setPetOptions([]);
       }
     }
 
@@ -39,8 +60,8 @@ export default function Appointment() {
 
       let start_datetime = data.star_date + " " + data.start_datetime + ":00";
       let end_datetime = data.star_date + " " + data.end_datetime + ":00";
-      let startDateTime = moment(start_datetime)
-      let endDateTime = moment(end_datetime)
+      let startDateTime = moment(start_datetime);
+      let endDateTime = moment(end_datetime);
 
       let cleanedData = {
         pet_id: data.pet_id,
@@ -63,18 +84,7 @@ export default function Appointment() {
       }
     } 
 
-    if (edit) {
-      useEffect(() => {
-        getAppointmentId(appt_id).then((userResponse) => {
-          setValue("pet_id", userResponse.pet_id);
-          setValue("user_id", userResponse.user_id);
-          setValue("description", userResponse.description);
-          setValue("start_datetime", userResponse.start_datetime);
-          setValue("end_datetime", userResponse.end_datetime);
-          setValue("title", userResponse.title);
-        })
-      }, []);
-  }
+
 
 
     return (
@@ -102,7 +112,7 @@ export default function Appointment() {
                             </span>
                           </span>
                         </div>
-                        <select className="form-control" name="func"  {...register("user_id", { required: true })} onChange={handleUserSelectChange}>  
+                        <select className="form-control" name="user_id"  {...register("user_id", { required: true })} onChange={handleUserSelectChange}>  
                           <option value="">Seleccionar</option>
                           {
                             userOptions.map((o) => {
@@ -178,8 +188,8 @@ export default function Appointment() {
                             </span>
                           </span>
                         </div>
-                        <input className="form-control" id="date" type="date" aria-label="text" {...register("star_date", { required: true })}/>
-                        {errors.star_date && ( <p>Debe ingresar una fecha valida.</p>)}
+                        <input className="form-control" id="date" type="date" aria-label="text" {...register("start_date", { required: true })}/>
+                        {errors.start_date && ( <p>Debe ingresar una fecha valida.</p>)}
                         <input className="form-control" id="time" type="time" aria-label="text" {...register("start_datetime", { required: true })}/> 
                         {errors.start_datetime && ( <p>Debe ingresar hora de inicio valida.</p>)}
                         <input className="form-control" id="time" type="time" aria-label="text" {...register("end_datetime", { required: true })}/>

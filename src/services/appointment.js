@@ -17,7 +17,7 @@ export const getAppointment = () => {
 
 export const getAppointmentId = (id) => {
     return axios
-        .get(`${config.baseHost}/api/pets/${id}`)
+        .get(`${config.baseHost}/api/appointments/${id}`)
         .then((res) => {
         return res.data;
         })
@@ -28,7 +28,7 @@ export const getAppointmentId = (id) => {
 };
 
 
-export const sendAppointments = (data) => {
+export const sendAppointments = (data, id, valor) => {
     let promise = null;
     if (valor) {
         promise = axios.put(`${config.baseHost}/api/appointments/${id}`, data);
