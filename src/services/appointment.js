@@ -50,3 +50,22 @@ export const sendAppointments = (data, id, valor) => {
             throw error
         });
 }
+
+export const deleteAppts = (id) => {
+    const url = `${config.baseHost}/api/appointments/${id}`;
+    console.log(id);
+    return DialogWindow('Esta seguro?', 'Se eliminara el registro', 'warning', true).then((result) => {
+      if (result.isConfirmed) {
+        return axios
+        .delete(url)
+          .then(res => {
+            alertNoty('success', 'Se elimino correctamente!')
+            return true
+          })
+          .catch(err => {
+            alertNoty('error', 'No es posible eliminar!')
+            throw err
+          });
+      }
+    })
+  };

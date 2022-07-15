@@ -29,7 +29,6 @@ export default function Appointment() {
                   let startDate = moment( apptResponse.start_datetime);
                   let startDatetime = moment( apptResponse.start_datetime);
 
-                  debugger
                   setValue("user_id", apptResponse.user_id);
                   setValue("description", apptResponse.description);
                   setValue("start_date", startDate.format('MM-DD-YYYY'));

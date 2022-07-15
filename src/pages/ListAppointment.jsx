@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular} from '@fortawesome/fontawesome-svg-core/import.macro'
-import {getAppointment} from "@services/appointment"
+import {getAppointment, deleteAppts} from "@services/appointment"
 import { useNavigate, Link } from "react-router-dom";
 
 export default function ListAppointment() {
@@ -17,6 +17,18 @@ export default function ListAppointment() {
         setAppointment(apptResponse);
         })
     }, []);
+
+    const handleDeleteAppts = (id) => {
+      deleteAppts(id)
+        .then(res => {
+          if (res === true) {
+            setAppointment(appointment.filter(appts => appts.id != id));
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
 
     return (
         <div className="container">
@@ -73,7 +85,7 @@ export default function ListAppointment() {
                               </button>
                             </Link>
 
-                                <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Eliminar">
+                                <button className="btn btn-icon-only btn-pill btn-primary" type="button" title="Eliminar"  onClick={ () => handleDeleteAppts(a.id)}>
                                     <FontAwesomeIcon icon={solid('trash')} className="icon-trash"/>
                                 </button>
                             </td>
