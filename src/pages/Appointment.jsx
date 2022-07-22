@@ -26,14 +26,14 @@ export default function Appointment() {
             if (edit) {
                 getAppointmentId(appt_id).then((apptResponse) => {
                   
-                  let startDate = moment( apptResponse.start_datetime);
-                  let startDatetime = moment( apptResponse.start_datetime);
+                  const startDateTime = moment( apptResponse.start_time);
+                  const endDateTime = moment( apptResponse.end_time);
 
                   setValue("user_id", apptResponse.user_id);
                   setValue("description", apptResponse.description);
-                  setValue("start_date", startDate.format('MM-DD-YYYY'));
-                  setValue("start_datetime", startDatetime.format());
-                  setValue("end_datetime", apptResponse.end_datetime);  
+                  setValue("start_date", startDateTime.format("YYYY-MM-DD"));
+                  setValue("start_time", startDateTime.format("hh:mm"));
+                  setValue("end_time", endDateTime.format("hh:mm"));  
                   setValue("title", apptResponse.title);
                   getPetsUserId(apptResponse.pet_id).then((petsResponse) => {
                     setPetOptions(petsResponse)
@@ -57,17 +57,17 @@ export default function Appointment() {
 
     const onSubmit = (data) => {
 
-      let start_datetime = data.star_date + " " + data.start_datetime + ":00";
-      let end_datetime = data.star_date + " " + data.end_datetime + ":00";
-      let startDateTime = moment(start_datetime);
-      let endDateTime = moment(end_datetime);
+      let start_time = data.start_date + " " + data.start_time + ":00";
+      let end_time = data.start_date + " " + data.end_time + ":00";
+      let startDateTime = moment(start_time);
+      let endDateTime = moment(end_time);
 
       let cleanedData = {
         pet_id: data.pet_id,
         user_id: data.user_id,
         description: data.description,
-        start_datetime: startDateTime.format(),
-        end_datetime: endDateTime.format(),
+        start_time: startDateTime.format(),
+        end_time: endDateTime.format(),
         title: data.title
       }
       
@@ -82,9 +82,6 @@ export default function Appointment() {
         });
       }
     } 
-
-
-
 
     return (
         <div className="section-header" id="section-header">
@@ -189,10 +186,10 @@ export default function Appointment() {
                         </div>
                         <input className="form-control" id="date" type="date" aria-label="text" {...register("start_date", { required: true })}/>
                         {errors.start_date && ( <p>Debe ingresar una fecha valida.</p>)}
-                        <input className="form-control" id="time" type="time" aria-label="text" {...register("start_datetime", { required: true })}/> 
-                        {errors.start_datetime && ( <p>Debe ingresar hora de inicio valida.</p>)}
-                        <input className="form-control" id="time" type="time" aria-label="text" {...register("end_datetime", { required: true })}/>
-                        {errors.end_datetime && ( <p>Debe ingresar hora fin valida.</p>)}
+                        <input className="form-control" id="time" type="time" aria-label="text" {...register("start_time", { required: true })}/> 
+                        {errors.start_time && ( <p>Debe ingresar hora de inicio valida.</p>)}
+                        <input className="form-control" id="time" type="time" aria-label="text" {...register("end_time", { required: true })}/>
+                        {errors.end_time && ( <p>Debe ingresar hora fin valida.</p>)}
                       </div>
                     </div>
                   

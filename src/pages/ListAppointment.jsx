@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { solid, regular} from '@fortawesome/fontawesome-svg-core/import.macro'
 import {getAppointment, deleteAppts} from "@services/appointment"
 import { useNavigate, Link } from "react-router-dom";
+import moment from 'moment';
 
 export default function ListAppointment() {
 
@@ -50,6 +51,9 @@ export default function ListAppointment() {
                     Descripción
                   </th>
                   <th className="border-0" scope="col">
+                    Fecha
+                  </th>
+                  <th className="border-0" scope="col">
                     Hora Inicio
                   </th>
                   <th className="border-0" scope="col">
@@ -72,8 +76,9 @@ export default function ListAppointment() {
                             <td headers="">{a.pet.name_pet}</td>
                             <td headers="">{a.title}</td>
                             <td headers="">{a.description}</td>
-                            <td headers="">{a.start_datetime}</td>
-                            <td headers="">{a.end_datetime}</td>
+                            <td headers="">{moment(a.start_datetime).format("YYYY-MM-DD")}</td>
+                            <td headers="">{moment(a.start_datetime).format("hh:mm")}</td>
+                            <td headers="">{moment(a.end_datetime).format("hh:mm")}</td>
                             <td headers="" className="col-2 col-sm-1 col-md-2">
                             <Link to={{
                               pathname: "/appointment",
