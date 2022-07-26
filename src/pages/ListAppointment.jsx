@@ -39,10 +39,10 @@ export default function ListAppointment() {
               <tbody>
                 <tr>
                   <th className="border-0" scope="col">
-                    Nombre del usuario
+                    Usuario
                   </th>
                   <th className="border-0" scope="col">
-                    Nombre de la mascota
+                    Mascota
                   </th>
                   <th className="border-0" scope="col">
                     Título
@@ -54,10 +54,7 @@ export default function ListAppointment() {
                     Fecha
                   </th>
                   <th className="border-0" scope="col">
-                    Hora Inicio
-                  </th>
-                  <th className="border-0" scope="col">
-                    Hora Fin
+                    Hora
                   </th>
                   <th className="border-0" scope="col">
                     Opciones
@@ -76,9 +73,8 @@ export default function ListAppointment() {
                             <td headers="">{a.pet.name_pet}</td>
                             <td headers="">{a.title}</td>
                             <td headers="">{a.description}</td>
-                            <td headers="">{moment(a.start_datetime).format("YYYY-MM-DD")}</td>
-                            <td headers="">{moment(a.start_datetime).format("hh:mm")}</td>
-                            <td headers="">{moment(a.end_datetime).format("hh:mm")}</td>
+                            <td headers="">{moment(a.start_time).format("YYYY-MM-DD")}</td>
+                            <td headers="">{moment(a.start_time).format("hh:mm a")} {moment(a.end_time).format("hh:mm a")}</td>
                             <td headers="" className="col-2 col-sm-1 col-md-2">
                             <Link to={{
                               pathname: "/appointment",

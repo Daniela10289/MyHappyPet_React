@@ -30,6 +30,7 @@ export const getAppointmentId = (id) => {
 
 export const sendAppointments = (data, id, valor) => {
     let promise = null;
+    
     if (valor) {
         promise = axios.put(`${config.baseHost}/api/appointments/${id}`, data);
     }else {
@@ -38,11 +39,11 @@ export const sendAppointments = (data, id, valor) => {
     return promise
         .then(res => {
             console.log(res.data);
-            // if (valor === true) {
-            // alertNoty('success', 'Se modifico correctamente!');
-            // } else {
-            // }
-            alertNoty('success', 'Se creo correctamente!');
+            if (valor === true) {
+                alertNoty('success', 'Se modifico correctamente!');
+            } else {
+                alertNoty('success', 'Se creo correctamente!');
+            }
         })
         .catch ((error) => {
             console.log("error!!! " + error);

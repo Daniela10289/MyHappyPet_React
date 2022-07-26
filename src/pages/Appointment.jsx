@@ -23,19 +23,19 @@ export default function Appointment() {
     useEffect(() => {
         getUsers().then((userResponse) => {
             setUserOptions(userResponse);
-            if (edit) {
+            if (edit) { 
                 getAppointmentId(appt_id).then((apptResponse) => {
                   
                   const startDateTime = moment( apptResponse.start_time);
                   const endDateTime = moment( apptResponse.end_time);
-
+                  
                   setValue("user_id", apptResponse.user_id);
                   setValue("description", apptResponse.description);
                   setValue("start_date", startDateTime.format("YYYY-MM-DD"));
                   setValue("start_time", startDateTime.format("hh:mm"));
                   setValue("end_time", endDateTime.format("hh:mm"));  
                   setValue("title", apptResponse.title);
-                  getPetsUserId(apptResponse.pet_id).then((petsResponse) => {
+                  getPetsUserId(apptResponse.user_id).then((petsResponse) => {
                     setPetOptions(petsResponse)
                     setValue("pet_id", apptResponse.pet_id);
                   })
@@ -55,8 +55,16 @@ export default function Appointment() {
       }
     }
 
-    const onSubmit = (data) => {
+    const validationDate = (date, time) =>  {
+      debugger
+      if (date <= now()){
+         console.log("La fecha no puede ser menor a la fecha actual")
+      }
+    }
 
+    const onSubmit = (data) => {
+      
+      validationDate(data.start_date);
       let start_time = data.start_date + " " + data.start_time + ":00";
       let end_time = data.start_date + " " + data.end_time + ":00";
       let startDateTime = moment(start_time);
@@ -72,12 +80,14 @@ export default function Appointment() {
       }
       
       if (appt_id && edit) {
-        sendAppointments(data, appt_id, true).then(()=>{  
-          navigate("/listpet");
+          
+        sendAppointments(cleanedData, appt_id, true).then(()=>{  
+          navigate("/listappointment");
           reset();
         });
       }else {
         sendAppointments(cleanedData, appt_id, false).then(()=>{
+          navigate("/listappointment");
           reset();
         });
       }
@@ -100,7 +110,7 @@ export default function Appointment() {
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group">
                       <label htmlFor="user_id">Nombre del usuario</label>
-                      <div className="input-group mb-4">
+                      <div className="input-group">
                         <div className="input-group-prepend"> 
                           <span className="input-group-text">
                             <span className="fas fa-envelope">
@@ -123,7 +133,7 @@ export default function Appointment() {
                     </div>
                     <div className="form-group">
                       <label htmlFor="pet_id">Nombre de la mascota</label>
-                      <div className="input-group mb-4">
+                      <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">
                             <span className="fas fa-unlock-alt"></span>
@@ -145,7 +155,7 @@ export default function Appointment() {
                     </div>
                     <div className="form-group">
                       <label htmlFor="last_name">Título</label>
-                      <div className="input-group mb-4">
+                      <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">
                             <span className="fas fa-unlock-alt"></span>
@@ -161,7 +171,7 @@ export default function Appointment() {
                     </div>
                     <div className="form-group">
                       <label htmlFor="phone">Descripción</label>
-                      <div className="input-group mb-5">
+                      <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">
                             <span className="fas fa-unlock-alt">
@@ -176,16 +186,28 @@ export default function Appointment() {
                       </div>
                     </div>
                     <div className="form-group">
-                      <label htmlFor="fecha">Fecha Inicio</label>
-                      <div className="input-group mb-5">
+                      <label htmlFor="date">Fecha</label>
+                      <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">
-                            <span className="fas fa-unlock-alt"><FontAwesomeIcon icon={solid("comment")}className="icon-form"/>
+                            <span className="fas fa-unlock-alt"><FontAwesomeIcon icon={solid("calendar-check")}className="icon-form"/>
                             </span>
                           </span>
                         </div>
                         <input className="form-control" id="date" type="date" aria-label="text" {...register("start_date", { required: true })}/>
                         {errors.start_date && ( <p>Debe ingresar una fecha valida.</p>)}
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="time">Hora</label>
+                      <div className="input-group mb-4">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">
+                            <span className="fas fa-unlock-alt">
+                              <FontAwesomeIcon icon={solid("clock")} className="icon-form"/>
+                            </span>
+                          </span>
+                        </div>
                         <input className="form-control" id="time" type="time" aria-label="text" {...register("start_time", { required: true })}/> 
                         {errors.start_time && ( <p>Debe ingresar hora de inicio valida.</p>)}
                         <input className="form-control" id="time" type="time" aria-label="text" {...register("end_time", { required: true })}/>

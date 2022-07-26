@@ -38,10 +38,10 @@ export default function ListPet() {
               <tbody>
                 <tr>
                   <th className="border-0" scope="col" id="class3">
-                    Nombre del usuario
+                    Usuario
                   </th>
                   <th className="border-0" scope="col" id="teacher3">
-                    Nombre de la mascota
+                    Mascota
                   </th>
                   <th className="border-0" scope="col" id="males3">
                     Raza
