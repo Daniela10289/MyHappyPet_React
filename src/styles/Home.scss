@@ -1,2 +1,16 @@
 @import "vars";
 @import '@styles/global.scss';
+
+.carousel-item {
+    position: center;
+}
+
+.carousel-control-prev {
+	color: black;
+}
+
+.slide {
+	max-width: 100%;
+	height: auto;
+	transition: opacity 0.75s ease-in-out;
+}

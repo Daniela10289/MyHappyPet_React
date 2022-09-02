@@ -5,6 +5,7 @@ import {getAppointment, deleteAppts} from "@services/appointment"
 import { useNavigate, Link } from "react-router-dom";
 import moment from 'moment';
 
+
 export default function ListAppointment() {
 
     const navigate = useNavigate();

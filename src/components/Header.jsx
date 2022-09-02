@@ -2,9 +2,22 @@ import React, { useState, useContext } from "react";
 import "@styles/Header.scss";
 import logo from "@logos/logo_happy_pet.png";
 import { useNavigate } from "react-router-dom";
+import Login from './Login';
+import Register from './Register';
 
 export default function Header() {
   const navigate = useNavigate();
+
+  const [modalLogin, setModalLogin] = useState(false);
+
+  const handleClose = () => setModalLogin(false);
+  const handleOpen = () => setModalLogin(true);
+
+  const [modalRegister, setmodalRegister] = useState(true);
+
+  const registerClose = () => setmodalRegister(false);
+  const registerOpen = () => setmodalRegister(true);
+  
 
   const ListUserClick = () => {
     navigate("/listuser");
@@ -21,6 +34,7 @@ export default function Header() {
   const clickHome = () => {
     navigate("/");
   };
+  
 
   return (
     <header className="header-global">
@@ -104,8 +118,10 @@ export default function Header() {
                 <div className="dropdown-menu dropdown-menu-lg">
                   <div className="col-auto px-0" data-dropdown-content>
                     <div className="list-group list-group-flush">
-                      <a onClick={ListUserClick}
-                        className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                      <a
+                        onClick={ListUserClick}
+                        className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4"
+                      >
                         <span className="icon icon-sm icon-secondary">
                           <span className="fas fa-file-alt"></span>
                         </span>
@@ -114,8 +130,10 @@ export default function Header() {
                           <span className="small">Crea tu usuario</span>
                         </div>
                       </a>
-                      <a onClick={ListPetClick}
-                        className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                      <a
+                        onClick={ListPetClick}
+                        className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4"
+                      >
                         <span className="icon icon-sm icon-secondary">
                           <span className="fas fa-microphone-alt"></span>
                         </span>
@@ -124,8 +142,10 @@ export default function Header() {
                           <span className="small">Registra tu mascota</span>
                         </div>
                       </a>
-                      <a onClick={ListAppointmentClick}
-                        className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                      <a
+                        onClick={ListAppointmentClick}
+                        className="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4"
+                      >
                         <span className="icon icon-sm icon-secondary">
                           <span className="fas fa-microphone-alt"></span>
                         </span>
@@ -140,33 +160,33 @@ export default function Header() {
               </li>
             </ul>
           </div>
-          {/* <div className="d-flex align-items-center">
-            <a
-              href="https://themesberg.com/product/ui-kits/neumorphism-ui-pro"
-              target="_blank"
-              className="btn btn-primary text-secondary d-none d-md-inline-block mr-3"
-            >
-              <i className="far fa-paper-plane mr-2"></i> Upgrade to PRO
-            </a>
-            <a
-              href="https://themesberg.com/docs/neumorphism-ui/getting-started/quick-start/"
-              target="_blank"
-              className="btn btn-primary"
-            >
-              <i className="fas fa-book"></i> Docs v1.0
-            </a>
+          <div className="d-flex align-items-center">
             <button
-              className="navbar-toggler ml-2"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbar_global"
-              aria-controls="navbar_global"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
+              type="button" 
+              className="btn btn-primary d-none d-md-inline-block mr-3"
+              data-toggle="modal"
+              data-target="#modal-form"
+              onClick={handleOpen}>
+              Ingresar
             </button>
-          </div> */}
+            <Login
+              show={modalLogin}
+              handleClose={handleClose}
+            />
+            
+            <button
+              type="button"
+              className="btn btn-primary d-none d-md-inline-block mr-3"
+              data-toggle="modal"
+              data-target="#modal-form"
+              onClick={registerOpen}>
+              Registrarse
+            </button>
+            <Register
+              show={modalRegister}
+              registerClose={registerClose}
+            />
+          </div>
         </div>
       </nav>
     </header>

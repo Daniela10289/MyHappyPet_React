@@ -8,6 +8,7 @@ import {getUsers} from "@services/user";
 import {getPetsUserId} from "@services/pet";
 import {sendAppointments, getAppointmentId} from "@services/appointment";
 import moment from 'moment';
+import {alertNoty, DialogWindow} from "@utils/alerts";
 
 export default function Appointment() {
 
@@ -55,16 +56,31 @@ export default function Appointment() {
       }
     }
 
-    const validationDate = (date, time) =>  {
-      debugger
-      if (date <= now()){
-         console.log("La fecha no puede ser menor a la fecha actual")
+    const validationDate = (date, startTime, endTime) =>  {
+      
+      let now = moment().format("YYYY-MM-DD");
+      let state = Boolean;
+
+      if (date <= now){
+        alertNoty('warning', 'La fecha seleccionada no puede ser menor a la fecha actual!');
+        state = false
+      }else {
+        state = true
       }
+
+      if (startTime >= endTime) {
+        alertNoty('warning', 'La hora seleccionada no es valida!');
+        state = false
+      }else {
+        state = true
+      }
+
+      return state
+
     }
 
     const onSubmit = (data) => {
       
-      validationDate(data.start_date);
       let start_time = data.start_date + " " + data.start_time + ":00";
       let end_time = data.start_date + " " + data.end_time + ":00";
       let startDateTime = moment(start_time);
@@ -79,18 +95,23 @@ export default function Appointment() {
         title: data.title
       }
       
-      if (appt_id && edit) {
-          
-        sendAppointments(cleanedData, appt_id, true).then(()=>{  
-          navigate("/listappointment");
-          reset();
-        });
-      }else {
-        sendAppointments(cleanedData, appt_id, false).then(()=>{
-          navigate("/listappointment");
-          reset();
-        });
+      if (validationDate(data.start_date, data.start_time, data.end_time)) {
+        if (appt_id && edit) {
+          sendAppointments(cleanedData, appt_id, true).then(()=>{  
+            navigate("/listappointment");
+            reset();
+          });
+        }else {
+          sendAppointments(cleanedData, appt_id, false).then(()=>{
+            navigate("/listappointment");
+            reset();
+          });
+        }
+      }else{
+        
       }
+
+      
     } 
 
     return (
